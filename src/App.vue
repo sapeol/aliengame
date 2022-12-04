@@ -52,11 +52,19 @@
         <h3>{{ questions[questionIndex].question }}</h3>
       </div>
       <div class="zombietalk">
-        <p v-for="character  in  characterChoices" :key="character">
+        <p v-for="character  in  shuffle(characterChoices)" :key="character">
           <button @click="pickQuestion(character)">{{ questions[questionIndex][character] }}</button>
         </p>
       </div>
     </section>
+    <GameStateEnd v-else-if="uiState == 'Won'">
+      <h1>Congrats you won!</h1>
+      <button @click="restart">Wanna Play Again?</button>
+    </GameStateEnd>
+    <GameStateEnd v-else-if="uiState == 'Lost'">
+      <h1>Your cover was Blown!</h1>
+      <button @click="restart">Wanna Try Again?</button>
+    </GameStateEnd>
   </div>
 </template>
 
@@ -67,7 +75,7 @@ import Friend from '@/components/Friend.vue';
 import Mechanic from '@/components/Mechanic.vue';
 import Zombie from '@/components/Zombie.vue';
 import Score from '@/components/Score.vue';
-
+import GameStateEnd from '@/components/GameStateEnd.vue';
 
 import { mapState } from 'vuex';
 import GameStateStart from '@/components/GameStateStart.vue';
@@ -82,7 +90,8 @@ export default {
     Friend,
     Mechanic,
     Zombie,
-    Score
+    Score,
+    GameStateEnd
   },
   data() {
     return {
@@ -108,6 +117,16 @@ export default {
     pickQuestion(character) {
       this.$store.commit('pickQuestion', character)
 
+    },
+    shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+          ;[array[i], array[j]] = [array[j], array[i]]
+      }
+      return array
+    },
+    restart() {
+      this.$store.commit('restart')
     }
   }
 };
