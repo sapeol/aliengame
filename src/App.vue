@@ -1,7 +1,7 @@
 <template>
   <div class="contain">
-    <GameStateStart v-if="uiState ">
-      <h2>which hooman do you want to be ? </h2>
+    <GameStateStart v-if="uiState === 'start'">
+      <h2>which hooman do you want to be ?</h2>
       <p v-for="option in characterChoices" :key="option" class="character-choices">
         <input type="radio" :id="option" :value="option" v-model="characterInput">
         <label :for="option">{{ option }}</label>
@@ -17,9 +17,13 @@
           <rect class="top-clip-path" x="1131.5" y="69.5" width="406" height="473" />
         </clipPath>
       </defs>
+      <Friend />
 
-      <text x="1000" y="930" style="font: normal 45px 'Recursive; text-transform: uppercase;" class="text">Character
-        Name</text>
+      <Score />
+      <component :is="character"></component>
+
+      <text x="1000" y="930" style="font: normal 45px 'Recursive; text-transform: uppercase;" class="text">{{ character
+      }}</text>
 
       <path fill="#f0959f" d="M0 842h657v192H0z" />
 
@@ -54,8 +58,8 @@ export default {
   components: {
     GameStateStart
   },
-  data(){
-    return{
+  data() {
+    return {
       characterInput: ""
     }
   },
@@ -68,8 +72,9 @@ export default {
     ])
   },
   methods: {
-    pickCharacter(){
-      
+    pickCharacter() {
+      this.$store.commit('pickCharacter', this.characterInput)
+      this.$store.commit('updateUIState', "characterChosen")
     }
   }
 };
