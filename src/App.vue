@@ -49,6 +49,14 @@
 </template>
 
 <script>
+import Artist from '@/components/Artist.vue';
+import Baker from '@/components/Baker.vue';
+import Friend from '@/components/Friend.vue';
+import Mechanic from '@/components/Mechanic.vue';
+import Zombie from '@/components/Zombie.vue';
+import Score from '@/components/Score.vue';
+
+
 import { mapState } from 'vuex';
 import GameStateStart from '@/components/GameStateStart.vue';
 
@@ -56,7 +64,13 @@ import GameStateStart from '@/components/GameStateStart.vue';
 
 export default {
   components: {
-    GameStateStart
+    GameStateStart,
+    Artist,
+    Baker,
+    Friend,
+    Mechanic,
+    Zombie,
+    Score
   },
   data() {
     return {
