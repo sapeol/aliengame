@@ -62,6 +62,7 @@ export default createStore({
       } else {
 
         Math.sign(state.score) > 0 ? state.uiState = "Won" : state.uiState = "Lost"
+        state.questionIndex = 0
       }
     },
     restart(state) {
